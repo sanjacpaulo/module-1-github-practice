@@ -48,11 +48,31 @@ export default function MarketplaceScreen() {
     product.name.toLowerCase().includes(search.trim().toLowerCase())
   );
 
+  // TODO 5:
+  // If item already exists, increase its quantity.
+  // Otherwise add it with quantity: 1.
+  // Then update state AND call saveCart(updatedCart).
   async function addToCart(product) {
-    // TODO 5:
-    // If item already exists, increase its quantity.
-    // Otherwise add it with quantity: 1.
-    // Then update state AND call saveCart(updatedCart).
+    try {
+      setStorageError('');
+      let updatedCart;
+      const existingItem = cartItems.find((item) => item.id === product.id);
+
+      if (existingItem) {
+        updatedCart = cartItems.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        updatedCart = [...cartItems, { ...product, quantity: 1 }];
+      }
+
+      setCartItems(updatedCart);
+      await saveCart(updatedCart);
+    } catch (error) {
+      setStorageError('Failed to save cart changes.');
+    }
   }
 
   async function increaseQuantity(productId) {
