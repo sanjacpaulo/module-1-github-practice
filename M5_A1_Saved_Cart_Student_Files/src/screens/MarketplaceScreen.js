@@ -118,9 +118,15 @@ export default function MarketplaceScreen() {
     }
   }
 
+  // TODO 9: Clear cart storage and state
   async function clearCart() {
-    // TODO 9:
-    // Call clearSavedCart(), then setCartItems([]).
+    try {
+      setStorageError('');
+      await clearSavedCart();
+      setCartItems([]);
+    } catch (error) {
+      setStorageError('Failed to clear saved cart.');
+    }
   }
 
   const totalItems = cartItems.reduce(
