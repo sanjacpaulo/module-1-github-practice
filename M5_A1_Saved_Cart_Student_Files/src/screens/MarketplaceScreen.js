@@ -27,6 +27,22 @@ export default function MarketplaceScreen() {
   // Use useEffect() to restore the saved cart when this screen first loads.
   // Required flow:
   // isLoading true -> loadCart() -> setCartItems() -> catch error -> finally setIsLoading(false)
+  useEffect(() => {
+    async function restoreCart() {
+      setIsLoading(true);
+      setStorageError('');
+      try {
+        const savedItems = await loadCart();
+        setCartItems(savedItems);
+      } catch (error) {
+        setStorageError('Failed to load saved cart data.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    restoreCart();
+  }, []);
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(search.trim().toLowerCase())
