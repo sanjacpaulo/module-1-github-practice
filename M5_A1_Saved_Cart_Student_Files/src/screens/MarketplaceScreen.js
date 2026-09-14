@@ -23,10 +23,7 @@ export default function MarketplaceScreen() {
   const [storageError, setStorageError] = useState('');
   const [activeTab, setActiveTab] = useState('shop');
 
-  // TODO 4:
-  // Use useEffect() to restore the saved cart when this screen first loads.
-  // Required flow:
-  // isLoading true -> loadCart() -> setCartItems() -> catch error -> finally setIsLoading(false)
+  // TODO 4: Restore saved cart on load
   useEffect(() => {
     async function restoreCart() {
       setIsLoading(true);
@@ -48,10 +45,7 @@ export default function MarketplaceScreen() {
     product.name.toLowerCase().includes(search.trim().toLowerCase())
   );
 
-  // TODO 5:
-  // If item already exists, increase its quantity.
-  // Otherwise add it with quantity: 1.
-  // Then update state AND call saveCart(updatedCart).
+  // TODO 5: Add item or increment existing quantity
   async function addToCart(product) {
     try {
       setStorageError('');
@@ -75,23 +69,53 @@ export default function MarketplaceScreen() {
     }
   }
 
+  // TODO 6: Increase matching item's quantity
   async function increaseQuantity(productId) {
-    // TODO 6:
-    // Increase only the matching item's quantity.
-    // Update state and save the same updated array.
+    try {
+      setStorageError('');
+      const updatedCart = cartItems.map((item) =>
+        item.id === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+
+      setCartItems(updatedCart);
+      await saveCart(updatedCart);
+    } catch (error) {
+      setStorageError('Failed to update item quantity.');
+    }
   }
 
+  // TODO 7: Decrease quantity or remove if zero
   async function decreaseQuantity(productId) {
-    // TODO 7:
-    // If quantity is greater than 1, decrease it.
-    // If quantity would become 0, remove the item.
-    // Update state and storage.
+    try {
+      setStorageError('');
+      const updatedCart = cartItems
+        .map((item) =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0);
+
+      setCartItems(updatedCart);
+      await saveCart(updatedCart);
+    } catch (error) {
+      setStorageError('Failed to update item quantity.');
+    }
   }
 
+  // TODO 8: Remove matching item using filter()
   async function removeFromCart(productId) {
-    // TODO 8:
-    // Use filter() to remove the matching id.
-    // Update state and storage.
+    try {
+      setStorageError('');
+      const updatedCart = cartItems.filter((item) => item.id !== productId);
+
+      setCartItems(updatedCart);
+      await saveCart(updatedCart);
+    } catch (error) {
+      setStorageError('Failed to remove item from cart.');
+    }
   }
 
   async function clearCart() {
