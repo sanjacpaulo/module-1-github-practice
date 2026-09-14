@@ -58,6 +58,12 @@ export default function BookingScreen() {
   async function handleSelectCity(cityId) {
     // TODO 7:
     // Update selectedCityId and persist the selected city.
+    try {
+      setSelectedCityId(cityId);
+      await saveSelectedCity(cityId);
+    } catch (error) {
+      setStorageError('Failed to save selected city.');
+    }
   }
 
   async function toggleSavedHotel(hotel) {
@@ -65,6 +71,17 @@ export default function BookingScreen() {
     // If hotel is already saved, remove it.
     // Otherwise add it.
     // Update React state and AsyncStorage using the SAME updated array.
+    try {
+      const isAlreadySaved = savedHotels.some((item) => item.id === hotel.id);
+      const updatedHotels = isAlreadySaved
+        ? savedHotels.filter((item) => item.id !== hotel.id)
+        : [...savedHotels, hotel];
+
+      setSavedHotels(updatedHotels);
+      await saveHotels(updatedHotels);
+    } catch (error) {
+      setStorageError('Failed to update saved hotels.');
+    }
   }
 
   async function removeSavedHotel(hotelId) {
