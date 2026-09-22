@@ -37,7 +37,6 @@ export default function MarketplaceScreen() {
     }
   }
 
-  // TODO 6: useEffect to call loadProducts once on mount
   useEffect(() => {
     loadProducts();
   }, []);
