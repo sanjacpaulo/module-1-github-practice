@@ -18,7 +18,6 @@ export default function MarketplaceScreen() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // TODO 5: loadProducts(isManualRefresh = false)
   async function loadProducts(isManualRefresh = false) {
     if (isManualRefresh) {
       setIsRefreshing(true);
