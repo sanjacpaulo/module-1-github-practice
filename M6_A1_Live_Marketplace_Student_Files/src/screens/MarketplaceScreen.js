@@ -36,7 +36,7 @@ export default function MarketplaceScreen() {
       setIsRefreshing(false);
     }
   }
-
+// TODO 5
   useEffect(() => {
     loadProducts();
   }, []);
