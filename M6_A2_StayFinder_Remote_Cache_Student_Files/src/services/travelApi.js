@@ -7,7 +7,7 @@ const url = `${BASE_URL}?latitude=${latitude}&longitude=${longitude}&current=tem
 // TODO 2: Call fetch with the generated URL and await the response
 const response = await fetch(url);
 
-// TODO 3: Check response status and throw an Error if asdasdnot OK
+// TODO 3: Check response statusasdasd and throw an Error if asdasdnot OK
 if (!response.ok) {
   throw new Error(`Failed to fetch travel conditions: ${response.statusText}`);
 }
