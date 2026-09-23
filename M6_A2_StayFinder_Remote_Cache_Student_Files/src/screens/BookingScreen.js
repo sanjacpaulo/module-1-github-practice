@@ -130,8 +130,10 @@ export default function BookingScreen() {
     }
   }
 
-  // TODO 9:
-  // Use useEffect() so the flow runs when selectedCityId changes.
+  // TODO 9: Trigger the data load whenever selectedCityId changes
+  useEffect(() => {
+    loadCityData();
+  }, [selectedCityId]);
 
   if (
     isLoading &&
