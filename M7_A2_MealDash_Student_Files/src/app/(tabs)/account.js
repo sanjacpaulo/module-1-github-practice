@@ -14,9 +14,7 @@ export default function AccountScreen() {
   const router = useRouter();
 
   function handleLogout() {
-    // TODO 5:
-    // Return to the login screen using:
-    // router.replace('/login')
+    router.replace('/login');
   }
 
   return (
