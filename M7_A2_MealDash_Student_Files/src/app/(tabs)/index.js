@@ -19,12 +19,10 @@ export default function HomeScreen() {
   function openRestaurant(
     restaurant
   ) {
-    // TODO 2:
-    // Navigate to:
-    // /restaurant/[id]
-    //
-    // Pass:
-    // id: restaurant.id
+    router.push({
+      pathname: '/restaurant/[id]',
+      params: { id: restaurant.id },
+    });
   }
 
   return (
