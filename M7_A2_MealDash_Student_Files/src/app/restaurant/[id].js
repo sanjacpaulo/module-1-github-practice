@@ -20,13 +20,11 @@ import {
 export default function RestaurantDetailsScreen() {
   const router = useRouter();
 
-  // TODO 3:
-  // Read the dynamic route parameter named "id".
-  const id = '';
+  // TODO 3: Read the dynamic route parameter named "id".
+  const { id } = useLocalSearchParams();
 
-  // TODO 4:
-  // Find the restaurant whose item.id matches id.
-  const restaurant = null;
+  // TODO 4: Find the restaurant whose item.id matches id.
+  const restaurant = restaurants.find((item) => item.id === id);
 
   if (!restaurant) {
     return (
