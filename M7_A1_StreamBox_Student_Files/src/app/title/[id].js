@@ -56,3 +56,5 @@ const s = StyleSheet.create({
   infoLabel: { color: '#8b8f98', fontSize: 10, fontWeight: '900' },
   infoValue: { color: '#fff', marginTop: 5, fontFamily: 'monospace' },
 });
+
+//asdasdasdsa//
