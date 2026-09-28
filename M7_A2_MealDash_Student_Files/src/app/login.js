@@ -1,7 +1,4 @@
-import React, {
-  useState,
-} from 'react';
-
+import React, { useState } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -9,45 +6,31 @@ import {
   TextInput,
   View,
 } from 'react-native';
-
-import {
-  useRouter,
-} from 'expo-router';
+import { useRouter } from 'expo-router';
 
 export default function LoginScreen() {
   const router = useRouter();
 
-  const [email, setEmail] =
-    useState('');
-
-  const [password, setPassword] =
-    useState('');
-
-  const [errorMessage, setErrorMessage] =
-    useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   function handleContinue() {
-    // TODO 1:
-    // If email or password is blank,
-    // show:
-    // "Enter your email and password."
-    //
-    // Otherwise:
-    // 1. clear the error
-    // 2. use router.replace('/(tabs)')
+    if (!email.trim() || !password.trim()) {
+      setErrorMessage('Enter your email and password.');
+    } else {
+      setErrorMessage('');
+      router.replace('/(tabs)');
+    }
   }
 
   return (
     <View style={styles.screen}>
       <View style={styles.logo}>
-        <Text style={styles.logoText}>
-          MD
-        </Text>
+        <Text style={styles.logoText}>MD</Text>
       </View>
 
-      <Text style={styles.title}>
-        Welcome to MealDash
-      </Text>
+      <Text style={styles.title}>Welcome to MealDash</Text>
 
       <Text style={styles.subtitle}>
         Sign in to browse nearby restaurants.
@@ -71,18 +54,11 @@ export default function LoginScreen() {
       />
 
       {errorMessage !== '' && (
-        <Text style={styles.error}>
-          {errorMessage}
-        </Text>
+        <Text style={styles.error}>{errorMessage}</Text>
       )}
 
-      <Pressable
-        onPress={handleContinue}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>
-          Continue
-        </Text>
+      <Pressable onPress={handleContinue} style={styles.button}>
+        <Text style={styles.buttonText}>Continue</Text>
       </Pressable>
 
       <Text style={styles.note}>
