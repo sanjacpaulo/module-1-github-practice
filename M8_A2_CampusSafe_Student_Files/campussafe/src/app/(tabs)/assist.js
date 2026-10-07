@@ -45,15 +45,25 @@ export default function AssistScreen() {
 
       // TODO 4:
       // Save the returned location with setLocation().
-    }
-    catch (error) {
-      setErrorMessage(
-        'CampusSafe could not determine your location. You can try again or contact campus security without sharing location.'
+      setLocation(currentPosition);
+      }
+      catch (error) {
+        setErrorMessage(
+          'CampusSafe could not determine your location. You can try again or contact campus security without sharing location.'
       );
-    }
-    finally {
-      setIsLocating(false);
-    }
+      }
+      finally {
+        setIsLocating(false);
+      }
+        }
+      catch (error) {
+        setErrorMessage(
+          'CampusSafe could not determine your location. You can try again or contact campus security without sharing location.'
+        );
+      }
+      finally {
+        setIsLocating(false);
+      }
   }
 
   async function handleSecurityCall() {
