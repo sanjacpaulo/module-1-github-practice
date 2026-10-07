@@ -24,46 +24,28 @@ export default function AssistScreen() {
     setErrorMessage('');
 
     try {
-      // TODO 1:
-      // Request foreground location permission.
-      // Save the returned status in permissionStatus.
+      // TODO 1: Request foreground location permission and save status
       const { status } = await Location.requestForegroundPermissionsAsync();
       setPermissionStatus(status);
 
-      // TODO 2:
-      // If permission is not granted:
-      // - show a clear message
-      // - stop this function with return
+      // TODO 2: Handle non-granted permission status
       if (status !== 'granted') {
-      setErrorMessage('Permission to access location was denied.');
-      return;
+        setErrorMessage('Permission to access location was denied.');
+        return;
       }
 
-      // TODO 3:
-      // Request the current device position.
+      // TODO 3: Request current device position
       const currentPosition = await Location.getCurrentPositionAsync({});
 
-      // TODO 4:
-      // Save the returned location with setLocation().
+      // TODO 4: Save location in state
       setLocation(currentPosition);
-      }
-      catch (error) {
-        setErrorMessage(
-          'CampusSafe could not determine your location. You can try again or contact campus security without sharing location.'
+    } catch (error) {
+      setErrorMessage(
+        'CampusSafe could not determine your location. You can try again or contact campus security without sharing location.'
       );
-      }
-      finally {
-        setIsLocating(false);
-      }
-        }
-      catch (error) {
-        setErrorMessage(
-          'CampusSafe could not determine your location. You can try again or contact campus security without sharing location.'
-        );
-      }
-      finally {
-        setIsLocating(false);
-      }
+    } finally {
+      setIsLocating(false);
+    }
   }
 
   async function handleSecurityCall() {
