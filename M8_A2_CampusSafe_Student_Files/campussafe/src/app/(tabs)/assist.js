@@ -41,6 +41,7 @@ export default function AssistScreen() {
 
       // TODO 3:
       // Request the current device position.
+      const currentPosition = await Location.getCurrentPositionAsync({});
 
       // TODO 4:
       // Save the returned location with setLocation().
