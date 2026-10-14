@@ -53,10 +53,18 @@ export async function updateGame(id, changes) {
   // TODO 3 — UPDATE
   // Use the document id to update only the supplied fields.
 
-  return {
-    id,
-    ...changes,
-  };
+  try {
+    const gameRef = doc(db, 'games', id);
+    await updateDoc(gameRef, changes);
+
+    return {
+      id,
+      ...changes,
+    };
+  } catch (error) {
+    console.error("Error updating game in Firestore:", error);
+    throw error;
+  }
 }
 
 export async function deleteGame(id) {
