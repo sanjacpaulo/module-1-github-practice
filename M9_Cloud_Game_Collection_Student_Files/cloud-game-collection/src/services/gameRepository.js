@@ -10,17 +10,18 @@ import { starterGames } from '../data/starterGames';
 */
 
 export async function getGames() {
-  // TODO 1 — READ
-  // Read the "games" collection from Firestore.
-  // Convert each Firestore document into:
-  // { id: doc.id, ...doc.data() }
-  // Return the final array.
-
-  const querySnapshot = await getDocs(collection(db, 'games'));
-  return querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  try {
+    const querySnapshot = await getDocs(collection(db, 'games'));
+    const games = querySnapshot.docs.map(docSnap => ({
+      id: docSnap.id,
+      ...docSnap.data(),
+    }));
+    
+    return games.length > 0 ? games : starterGames;
+  } catch (error) {
+    console.error("Error reading games from Firestore:", error);
+    return starterGames;
+  }
 }
 
 export async function addGame(game) {
@@ -28,10 +29,24 @@ export async function addGame(game) {
   // Add the supplied game object to the "games" collection.
   // Return the new game with its Firestore document id.
 
-  return {
-    id: String(Date.now()),
-    ...game,
-  };
+  try {
+    const docRef = await addDoc(collection(db, 'games'), {
+      title: game.title || 'Untitled Game',
+      genre: game.genre || 'Action',
+      coverUrl: game.coverUrl || '', // Supports real cover art URLs
+      rating: game.rating || 0,
+      createdAt: new Date().toISOString(),
+      ...game,
+    });
+
+    return {
+      id: docRef.id,
+      ...game,
+    };
+  } catch (error) {
+    console.error("Error adding game to Firestore:", error);
+    throw error;
+  }
 }
 
 export async function updateGame(id, changes) {
