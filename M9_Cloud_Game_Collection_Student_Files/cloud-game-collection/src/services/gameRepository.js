@@ -16,7 +16,11 @@ export async function getGames() {
   // { id: doc.id, ...doc.data() }
   // Return the final array.
 
-  return starterGames;
+  const querySnapshot = await getDocs(collection(db, 'games'));
+  return querySnapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 }
 
 export async function addGame(game) {
