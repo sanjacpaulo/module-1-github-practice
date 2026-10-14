@@ -71,5 +71,13 @@ export async function deleteGame(id) {
   // TODO 4 — DELETE
   // Delete the Firestore document that matches this id.
 
-  return id;
+  try {
+    const gameRef = doc(db, 'games', id);
+    await deleteDoc(gameRef);
+
+    return id;
+  } catch (error) {
+    console.error("Error deleting game from Firestore:", error);
+    throw error;
+  }
 }
